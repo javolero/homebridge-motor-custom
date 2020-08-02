@@ -1,6 +1,8 @@
 from time import sleep
 import RPi.GPIO as GPIO
 
+import sys
+
 DIR = 20
 STEP = 21
 CW = 1
@@ -11,7 +13,7 @@ SPR = 200
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(DIR, GPIO.OUT)
 GPIO.setup(STEP, GPIO.OUT)
-GPIO.output(DIR, CW)
+
 
 
 MODE = (14,15,18)
@@ -30,22 +32,20 @@ step_count = SPR * 2 * 10
 delay = .005 / 32
 
 
+if sys.argv[1] == 'ON':
 
-
-for x in range(step_count):
-	GPIO.output(STEP, GPIO.HIGH)
-	sleep(delay)
-	GPIO.output(STEP, GPIO.LOW)
-	sleep(delay)
-
-
-sleep(.5)
-GPIO.output(DIR, CCW)
-
-for x in range(step_count):
+    GPIO.output(DIR, CW)
+    for x in range(step_count):
         GPIO.output(STEP, GPIO.HIGH)
         sleep(delay)
         GPIO.output(STEP, GPIO.LOW)
-        sleep(delay) 
+        sleep(delay)
+else:
 
+    GPIO.output(DIR, CCW)
+    for x in range(step_count):
+            GPIO.output(STEP, GPIO.HIGH)
+            sleep(delay)
+            GPIO.output(STEP, GPIO.LOW)
+            sleep(delay)
 

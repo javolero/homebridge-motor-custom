@@ -69,9 +69,8 @@ class ExampleSwitch implements AccessoryPlugin {
         this.switchOn = value as boolean;
         log.info("Switch state was set to: " + (this.switchOn? "ON": "OFF"));
 
-        if( this.switchOn ){
-          spawn('python', ['test.py']);
-        }
+        spawn('python', ['test.py', (this.switchOn? "ON": "OFF")]);
+        
         callback();
       });
 
