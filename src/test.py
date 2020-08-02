@@ -49,3 +49,4 @@ else:
             GPIO.output(STEP, GPIO.LOW)
             sleep(delay)
 
+GPIO.cleanup()  
