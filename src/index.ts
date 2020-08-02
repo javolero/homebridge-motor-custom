@@ -11,6 +11,8 @@ import {
   Service
 } from "homebridge";
 
+const {spawn} = require('child_process');
+
 /*
  * IMPORTANT NOTICE
  *
@@ -60,11 +62,16 @@ class ExampleSwitch implements AccessoryPlugin {
     this.switchService.getCharacteristic(hap.Characteristic.On)
       .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
         log.info("Current state of the switch was returned: " + (this.switchOn? "ON": "OFF"));
+        
         callback(undefined, this.switchOn);
       })
       .on(CharacteristicEventTypes.SET, (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
         this.switchOn = value as boolean;
         log.info("Switch state was set to: " + (this.switchOn? "ON": "OFF"));
+
+        if( this.switchOn ){
+          spawn('python', ['test.py']);
+        }
         callback();
       });
 
