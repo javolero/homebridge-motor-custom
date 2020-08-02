@@ -2,6 +2,8 @@ import { Service, PlatformAccessory, CharacteristicValue, CharacteristicSetCallb
 
 import { ExampleHomebridgePlatform } from './platform';
 
+const {spawn} = require('child_process');
+
 /**
  * Platform Accessory
  * An instance of this class is created for each accessory your platform registers
@@ -51,8 +53,8 @@ export class ExamplePlatformAccessory {
       .on('get', this.getOn.bind(this));               // GET - bind to the `getOn` method below
 
     // register handlers for the Brightness Characteristic
-    this.service.getCharacteristic(this.platform.Characteristic.Brightness)
-      .on('set', this.setBrightness.bind(this));       // SET - bind to the 'setBrightness` method below
+    // this.service.getCharacteristic(this.platform.Characteristic.Brightness)
+    //   .on('set', this.setBrightness.bind(this));       // SET - bind to the 'setBrightness` method below
 
     // EXAMPLE ONLY
     // Example showing how to update the state of a Characteristic asynchronously instead
@@ -60,15 +62,15 @@ export class ExamplePlatformAccessory {
     //
     // Here we change update the brightness to a random value every 5 seconds using 
     // the `updateCharacteristic` method.
-    setInterval(() => {
-      // assign the current brightness a random value between 0 and 100
-      const currentBrightness = Math.floor(Math.random() * 100);
+    // setInterval(() => {
+    //   // assign the current brightness a random value between 0 and 100
+    //   const currentBrightness = Math.floor(Math.random() * 100);
 
-      // push the new value to HomeKit
-      this.service.updateCharacteristic(this.platform.Characteristic.Brightness, currentBrightness);
+    //   // push the new value to HomeKit
+    //   this.service.updateCharacteristic(this.platform.Characteristic.Brightness, currentBrightness);
 
-      this.platform.log.debug('Pushed updated current Brightness state to HomeKit:', currentBrightness);
-    }, 10000);
+    //   this.platform.log.debug('Pushed updated current Brightness state to HomeKit:', currentBrightness);
+    // }, 10000);
   }
 
   /**
@@ -79,6 +81,9 @@ export class ExamplePlatformAccessory {
 
     // implement your own code to turn your device on/off
     this.exampleStates.On = value as boolean;
+
+
+    spawn('python', ['script1.py']);
 
     this.platform.log.debug('Set Characteristic On ->', value);
 
