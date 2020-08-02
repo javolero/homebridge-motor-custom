@@ -83,7 +83,7 @@ export class ExamplePlatformAccessory {
     this.exampleStates.On = value as boolean;
 
 
-    spawn('python', ['script1.py']);
+    spawn('python', ['test.py']);
 
     this.platform.log.debug('Set Characteristic On ->', value);
 
